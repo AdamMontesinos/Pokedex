@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity{
     public static TextView txtDisplay;
     public static ImageView imgPok;
 
+    public int count;
 
     public static ImageView [] imgType;
 
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        count=1;
         act = this;
         imgType = new ImageView[2];
 
@@ -39,7 +40,10 @@ public class MainActivity extends AppCompatActivity{
         imgType[0] = findViewById(R.id.imgType0);
         imgType[1] = findViewById(R.id.imgType1);
 
-       ImageButton btnSearch = findViewById(R.id.btnSearch);
+        fetchData process = new fetchData(Integer.toString(count));
+        process.execute();
+
+        ImageButton btnSearch = findViewById(R.id.btnSearch);
         btnSearch.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 showTxtSearch();
@@ -49,6 +53,27 @@ public class MainActivity extends AppCompatActivity{
         ImageButton btnTypes = findViewById(R.id.btnTypes);
         btnTypes.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                TypeSearch();
+            }
+        });
+
+        Button btnRight = findViewById(R.id.btnRight);
+        btnRight.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                count++;
+                fetchData process = new fetchData(Integer.toString(count));
+                process.execute();
+            }
+        });
+
+        Button btnLeft = findViewById(R.id.btnLeft);
+        btnLeft.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (count>1) {
+                    count--;
+                    fetchData process = new fetchData(Integer.toString(count));
+                    process.execute();
+                }
             }
         });
 
@@ -78,5 +103,18 @@ public class MainActivity extends AppCompatActivity{
         alert.show();
     }
 
+    public void TypeSearch(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Elige un tipo:");
+                //.setItems(R.array.Types, new DialogInterface.OnClickListener() {
+                 //  public void onClick(DialogInterface dialog, int which) {
+                  //      int type = which + 1;
+                   //     Log.i("logtest","" + (which+1));
+        //    fechDataType pokemons = new fetchDataType(Integer.toString(type));
+                  //      pokemons.execute();
 
+    }
+              //  });
+      //  builder.create().show();
 }
+
